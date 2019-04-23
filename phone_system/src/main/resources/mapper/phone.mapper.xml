@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qianfeng.mapper.PhoneMapper">
+    <!--手机品牌结果集-->
+    <resultMap id="baseBrank" type="com.qianfeng.po.TbBrank">
+        <id property="brankId" column="brank_id" javaType="java.lang.Integer"></id>
+        <result property="brankName" column="brank_name" javaType="java.lang.String"></result>
+    </resultMap>
+
+    <!--手机型号结果集-->
+    <resultMap id="basePhoneInfo" type="com.qianfeng.po.TbPhone">
+        <id property="phoneId" column="phone_id" javaType="java.lang.Integer"></id>
+        <result property="phoneImage" column="phone_image" javaType="java.lang.String"></result>
+        <result property="phoneInfo" column="phone_info" javaType="java.lang.String"></result>
+        <result property="phonePrice" column="phone_price" javaType="java.lang.Integer"></result>
+        <result property="brankId" column="brank_id" javaType="java.lang.Integer"></result>
+    </resultMap>
+
+    <!--手机品牌查询-->
+    <select id="queryAllBrank" resultMap="baseBrank">
+        select brank_id,brank_name from tb_brank;
+    </select>
+
+    <!--手机型号+图片查询-->
+    <select id="queryAllPhoneInfo" resultMap="basePhoneInfo">
+        select phone_id,phone_info,phone_image from tb_phone limit #{page},8;
+    </select>
+
+    <!--根据手机品牌查询手机型号-->
+    <select id="queryPhoneInfoByBrank" resultMap="basePhoneInfo">
+        select phone_id,phone_info,phone_image,phone_price
+        from tb_phone
+        where brank_id = #{brankId};
+    </select>
+</mapper>
