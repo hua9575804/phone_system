@@ -30,6 +30,7 @@
     <!--1、导入vue.js的包-->
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
 </head>
 <body>
 <link rel="stylesheet" type="text/css" href="../css/alert_zhe.css"/>
@@ -107,13 +108,13 @@
 <div class="search_list">
     <div class="page">
         <div class="current"><a href="">首页</a><span>></span><a href="goods.html">闲置回收</a>
-            <span>></span><a href="ershoushouji.html">手机</a>
+            <span>></span><a href="index.html">手机</a>
             <em></em>
         </div>
         <div class="side_left">
             <dl class="side_list">
                 <dt>搜索结果分类</dt>
-                <dd class="item_on"><a href="ershoushouji.html" title="手机回收价格评估"><b
+                <dd class="item_on"><a href="index.html" title="手机回收价格评估"><b
                         class="item1">&nbsp;</b><em>手机</em><span>&nbsp;</span></a></dd>
                 <dd class=""><a href="ershoupingguo.html" title="苹果系列回收价格评估"><b
                         class="item2">&nbsp;</b><em>苹果系列</em><span>&nbsp;</span></a></dd>
@@ -149,12 +150,12 @@
                          style="vertical-align:middle"><span>400-xxxx-xxx</span></li>
             </ul>
         </div>
-        <div class="side_right">
+        <div class="side_right" id="brank_phone_list">
             <!--全部手机品牌-->
             <div class="brand">
                 <div class="title2"><span><a href="goods.html"><strong>手机</strong> 品牌</a></span></div>
                 <!-- vue框架----------------v-bind:onclick="change('+brank.brankId+')" --- v-for="brank in brankList"----------------------------- -->
-                <div class="brand_main" id="brank_list">
+                <div class="brand_main">
                     <div class="brand_hot">
                         <!--<a href="ershouhtc.html">HTC</a>-->
                         <template v-for="brank in brankList">
@@ -172,18 +173,18 @@
             <!--全部手机品牌-->
             <div class="search_main">
                 <div class="search_title"><h2 class="list-item">手机回收</h2>&nbsp;&nbsp;&nbsp;&nbsp;<em></em>搜索到<em>
-                    1852 </em>个结果
+                    6 </em>个结果
                 </div>
                 <!-- -----------------------------------------------------v-bind:---------------------------------------------------- -->
-                <dl class="pic_list" id="phone_list">
+                <dl class="pic_list">
                     <dd  v-for="phones in phoneList">
                     <div class="pic_list_box">
                         <div class="pic_list_img"><a href="info.html" v-bind:title="phones.phoneInfo + '回收价格评估'"><img
-                                v-bind:src="'../images/'+ phones.phoneImage" width="180"
+                                v-bind:src="'http://localhost/images/'+ phones.phoneImage" width="180"
                                 height="135" v-bind:alt="phones.phoneInfo + '闲置回收价格评估'"/></a></div>
                         <p class="name">{{phones.phoneInfo}}</p>
                         <!--<p class="price">回收价：<em>￥3080</em></p>-->
-                        <p class="pinggu"><a href="goods/info/21025.html" v-bind:title="'在线评估' + phones.phoneInfo + '回收价格'"><!--去评估--></a>
+                        <p class="pinggu"><a :href="'info.html?phoneId='+phones.phoneId" v-bind:title="'在线评估' + phones.phoneInfo + '回收价格'"><!--去评估--></a>
                         </p>
                         <div class="hot"><img src="../images/hot.png"/></div>
                     </div>
@@ -202,7 +203,7 @@
                     <!--</dd>-->
                     <div class="clear"></div>
                 </dl>
-                <!-- --------------------------------------------------------------------------------------------------------- -->
+                <!-- --------------------------------------------------------------------------------------------------------------- -->
                 <div class="clear"></div>
                 <div class="pageStr">
                     <div class="ihuigo_page"><span class="cur_link">1</span><span><a
@@ -302,7 +303,7 @@
                     <div class="mui-mbar-go"><a href="service/suggestions.html" rel="nofollow" target="_blank"><img
                             src="../images/new_images/cart_icon2.png"/></a></div>
                     <div class="mui-weima"><a href="service/suggestions.html" rel="nofollow" target="_blank"><img
-                            src="../images/new_images/weixin.png" width="192" height="192"/></a></div>
+                            src="../images/weixin.png" width="192" height="192"/></a></div>
                 </div>
                 <!--微信二维码-->
                 <!--投诉建议-->
@@ -350,42 +351,63 @@
 
 <script type="text/javascript">
 
-    var brank = new Vue({
-        el:"#brank_list",
+    // var brank = new Vue({
+    //     el:"#brank_list",
+    //     data:{
+    //         brankList:null
+    //     },
+    //     //mounted是vue生命周期的钩子函数，此方法是vue自带的生命周期方法
+    //     mounted() {
+    //         //访问后台获取数据
+    //         //mounted处于生命周期定义数据之后，重组html标签之前
+    //         axios.get("http://localhost:8080/phone/branks")
+    //         //此处this代表是vue对象
+    //             .then(response =>{ this.brankList = response.data;}
+    //             )
+    //     } ,
+    // });
+    //
+    // var phone =  new Vue({
+    //     el:"#phone_list",
+    //     data:{
+    //         phoneList:null
+    //     },
+    //     //mounted是vue生命周期的钩子函数，此方法是vue自带的生命周期方法
+    //     mounted() {
+    //         //访问后台获取数据
+    //         //mounted处于生命周期定义数据之后，重组html标签之前
+    //         axios.get("http://localhost:8080/phone/phones/0")
+    //         //此处this代表是vue对象
+    //             .then(response =>{ this.phoneList = response.data;}
+    //             )
+
+    //     },
+    // });
+
+    var brank_phone =  new Vue({
+        el:"#brank_phone_list",
         data:{
+            phoneList:null,
             brankList:null
         },
-        //mounted是vue生命周期的钩子函数，此方法是vue自带的生命周期方法
         mounted() {
-            //访问后台获取数据
-            //mounted处于生命周期定义数据之后，重组html标签之前
-            axios.get("http://localhost:8080/phone/branks")
-            //此处this代表是vue对象
-                .then(response =>{ this.brankList = response.data;}
-                )
-        } ,
+            axios.get("http://localhost:8080/phone/phones/0").then(response =>{ this.phoneList = response.data;}),
+            axios.get("http://localhost:8080/phone/branks").then(response =>{ this.brankList = response.data;})
+        },
     });
 
-    var phone =  new Vue({
-        el:"#phone_list",
-        data:{
-            phoneList:null
-        },
-        //mounted是vue生命周期的钩子函数，此方法是vue自带的生命周期方法
-        mounted() {
-            //访问后台获取数据
-            //mounted处于生命周期定义数据之后，重组html标签之前
-            axios.get("http://localhost:8080/phone/phones/0")
-            //此处this代表是vue对象
-                .then(response =>{ this.phoneList = response.data;}
-                )
-        },
-    });
-    function change(brankId) {
-        // alert(brankId)
-        axios.get("http://localhost:8080/phone/phoneBrank/" + brankId).then(function (response) {
-            phone.phoneList = response.data
+    var url = window.location.href;
+    var brankIdInfo = url.substring(url.indexOf("=")+1);
+    // alert(brankIdInfo);
+    if (brankIdInfo != null) {
+        axios.get("http://localhost:8080/phone/phoneBrank/" + brankIdInfo).then(function (response) {
+            brank_phone.phoneList = response.data;
         });
+    }
+    function change(brankId) {
+            axios.get("http://localhost:8080/phone/phoneBrank/" + brankId).then(function (response) {
+                brank_phone.phoneList = response.data
+            });
     }
 </script>
 <!--[if lte IE 6]>

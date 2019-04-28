@@ -1,6 +1,6 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>订单提交-回购网 -  手机回收网 | 二手手机交易 | 笔记本回收 | 平板回收</title>
@@ -29,6 +29,10 @@
     <script src="../js/new_js/menu.js" type="text/javascript"></script>
 
     <script src="../js/new_js/index.js" type="text/javascript"></script>
+
+    <!--1、导入vue.js的包-->
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 </head>
 <body>
@@ -275,7 +279,7 @@
                                         src="../images/in_1.gif"></span><span class="img_2"><input name="card_sn" id="card_sn" type="text" onkeyup="show_card_sn_format()" onfocus="show_card_sn_format()" onblur="card_sn_blur()"></span> <span class="img_1"><IMG src="../images/in_3.gif"></span><span class="img_3"><em style="color: red; font-size:12px;margin-right: 10px;">*</em></span> <span class="contact_textsval">我们对用户帐号信息严格保密，请放心填写！</span></li>
                                 <div class="clear"></div>
 
-                                <div id="card_sn_format" style="display:none;position:absolute; left:100px; top:-26px; z-index:10000; border:1px solid #ccc; background:#fff9c9; height:24px; line-height:24px; padding:0 5px; font-size:16px; color:#2056ff; font-weight:bold; font-family:"微软雅黑";"></div>
+                                <div id="card_sn_format" style="display:none;position:absolute; left:100px; top:-26px; z-index:10000; border:1px solid #ccc; background:#fff9c9; height:24px; line-height:24px; padding:0 5px; font-size:16px; color:#2056ff; font-weight:bold; font-family:'微软雅黑'"></div>
                         </ul>
                     </div>
 
@@ -456,7 +460,8 @@
       您可选择<a href="http://www.ihuigo.com/html/baoxian.html" style="background:none; padding:0px; color:#03F; font-weight:bold;" target="_blank">参与中国人民财产保险投保计划</a></span>
             &nbsp;&nbsp;
             <label><a href="/service/legal.html" target="_blank"  class="on">我已查看并同意回收协议</a></label>
-            <input type="button" name="sub_button" id="sub_button" value="提交回购单" class="input_btn2" onclick="return checkfrom()" />
+            <!--<input type="button" name="sub_button" id="sub_button" value="提交回购单" class="input_btn2" onclick="return checkfrom()" />-->
+            <input type="button" name="sub_button" id="sub_button" value="提交回购单" class="input_btn2" onclick=" sunbmitOrder()" />
         </div>
 
         <dl id="baoxian_content" style="display:none;">
@@ -469,7 +474,7 @@
 
     </div>
     <!--订单-->
-    <div class="dingdan">
+    <div class="dingdan" id="showPhoneInfo">
         <div class="contact_way">订单详情：</div>
         <table width="100%" border="0" cellpadding="0" cellspacing="1"  class="table1">
             <tbody>
@@ -480,45 +485,46 @@
             </tr>
             <tr>
                 <td height="95" align="center">
-                    <div class="contact_way_img"><img src="http://img.ihuigo.com/goods_a/739b3910f020832305a94a6a96eec952.jpg"></div>
-                    <div class="contact_way_txt"><p><span>iphone 7</span></p></div>
+                    <div class="contact_way_img"><img v-bind:src="'http://localhost/images/'+ damageInfo.phoneImage" width="74px" height="64px"></div>
+                    <div class="contact_way_txt"><p><span>{{damageInfo.phoneInfo}}</span></p></div>
                     <div class="clear"></div>
                 </td>
                 <td align="center" style="line-height:22px;">
-                    <h3>￥2800.00</h3>
+                    <h3>￥{{damageInfo.phonePrice}}</h3>
                 </td>
                 </td>
                 <td style="padding-left:28px; line-height: 18px;text-align: left;">
-		  								<span>
-									<a>大陆行货</a>
-									|<a>保修一个月以上</a>
-								</span>
-                    <br />
+                    <a>{{damageInfo.infoStr}}</a>
+		  								<!--<span>-->
+									<!--<a>大陆行货</a>-->
+									<!--|<a>保修一个月以上</a>-->
+								<!--</span>-->
+                    <!--<br />-->
 
-                    <span>
-									<a>红色</a>
-									 |&nbsp;&nbsp;<a>完好无破损</a>
-									 |&nbsp;&nbsp;<a>显示完好</a>
-									 |&nbsp;&nbsp;<a>通话功能正常</a>
-									 |&nbsp;&nbsp;<a>iCloud账号可以解除</a>
-									 |&nbsp;&nbsp;<a>全新机</a>
-									 |&nbsp;&nbsp;<a>开机正常</a>
-									 |&nbsp;&nbsp;<a>机身无进水受潮</a>
-									 |&nbsp;&nbsp;<a>按键接口及卡槽正常</a>
-									 |&nbsp;&nbsp;<a>无拆修</a>
-									 |&nbsp;&nbsp;<a>指纹功能正常</a>
-									 |&nbsp;&nbsp;<a>蓝牙/wifi功能正常</a>
-									 |&nbsp;&nbsp;<a>照相及感光功能正常</a>
-									 |&nbsp;&nbsp;<a>有换机</a>
-									 |&nbsp;&nbsp;<a>32G</a>
-									 |&nbsp;&nbsp;<a>机身无变形</a>
-								</span>
+                    <!--<span>-->
+									<!--<a>红色</a>-->
+									 <!--|&nbsp;&nbsp;<a>完好无破损</a>-->
+									 <!--|&nbsp;&nbsp;<a>显示完好</a>-->
+									 <!--|&nbsp;&nbsp;<a>通话功能正常</a>-->
+									 <!--|&nbsp;&nbsp;<a>iCloud账号可以解除</a>-->
+									 <!--|&nbsp;&nbsp;<a>全新机</a>-->
+									 <!--|&nbsp;&nbsp;<a>开机正常</a>-->
+									 <!--|&nbsp;&nbsp;<a>机身无进水受潮</a>-->
+									 <!--|&nbsp;&nbsp;<a>按键接口及卡槽正常</a>-->
+									 <!--|&nbsp;&nbsp;<a>无拆修</a>-->
+									 <!--|&nbsp;&nbsp;<a>指纹功能正常</a>-->
+									 <!--|&nbsp;&nbsp;<a>蓝牙/wifi功能正常</a>-->
+									 <!--|&nbsp;&nbsp;<a>照相及感光功能正常</a>-->
+									 <!--|&nbsp;&nbsp;<a>有换机</a>-->
+									 <!--|&nbsp;&nbsp;<a>32G</a>-->
+									 <!--|&nbsp;&nbsp;<a>机身无变形</a>-->
+								<!--</span>-->
 
                 </td>
             </tr>
             </tbody>
         </table>
-        <div class="foot_bor"> <em>1</em>件产品总计回收价格<em style="font-size:18px;">￥2800</em> <!--<span>赠送环保券 <i>30</i>元--></span></div>
+        <div class="foot_bor"> <em>1</em>件产品总计回收价格<em style="font-size:18px;">￥{{damageInfo.phonePrice}}</em> <!--<span>赠送环保券 <i>30</i>元--></span></div>
     </div>
     <!--订单-->
     </div>
@@ -547,6 +553,76 @@
 
     }
     aa(2);
+</script>
+
+<script type="text/javascript">
+
+    new Vue({
+        el:"#showPhoneInfo",
+        data:{
+            damageInfo:null
+        },
+        mounted(){
+            axios.get("http://localhost:8080/price/getPhoneInfo").then(response =>{
+                this.damageInfo = response.data;
+                console.log("hgkghgjh")
+                console.log(response.data.phoneImage)
+                console.log(response.data.infoStr)
+            })
+        },
+    });
+
+
+    function sunbmitOrder() {
+        // var memberAddr = $("input[name='member_addr']:checked").val();
+        // alert(memberAddr);
+        var linkName = $("#link_name").val();
+        var mobile = $("#mobile").val();
+        var province = $("#province").val();
+        var city = $("#city").val();
+        var district = $("#district").val();
+        var address = $("#address").val();
+        var stime = $("#stime").val();
+        var etime = $("#etime").val();
+        var lock = $("input[name='lock']:checked").val();//手机锁
+        var bankname = $("#bankname option:selected").text();
+        var cardSn = $("#card_sn").val();//卡号
+        var ralname = $("#realname").val();//开户姓名
+        var alipayRealname = $("#alipay_realname").val();//支付宝
+        var alipayUsername = $("#alipay_username").val();//支付宝账号
+        var yuTime = $("#yu_time").val();//上门时间
+        var mianjiao_method_1 = $("input[name='mianjiao_method_1']:checked").val();
+        var baoxianName = $("#baoxian_name").val();//保险
+        var baoxianCardId = $("#baoxian_card_id").val();
+
+       var orderInfo = new URLSearchParams;
+        orderInfo.append("linkname",linkName);
+        orderInfo.append("mobile",mobile);
+        orderInfo.append("province",province);
+        orderInfo.append("city",city);
+        orderInfo.append("district",district);
+        orderInfo.append("address",address);
+        orderInfo.append("stime",stime);
+        orderInfo.append("etime",etime);
+        orderInfo.append("lock",lock);
+        orderInfo.append("bankname",bankname);
+        orderInfo.append("cardsn",cardSn);
+        orderInfo.append("ralname",ralname);
+        orderInfo.append("alipayrealname",alipayRealname);
+        orderInfo.append("alipayusername",alipayUsername);
+        orderInfo.append("mianjiaomethod",mianjiao_method_1);
+        orderInfo.append("baoxianname",baoxianName);
+        orderInfo.append("baoxiancardId",baoxianCardId);
+
+        axios.post("http://localhost:8080/order", orderInfo).then(function (response) {
+            if (response.data == "ok") {
+                alert(response.data);
+                window.location.href="http://localhost:8080/html/order.html";
+            }else {
+                alert("false")
+            }
+        })
+    }
 </script>
 </body>
 </html>

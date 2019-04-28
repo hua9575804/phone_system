@@ -24,6 +24,7 @@ function	property_click(obj,suffix,property_id){
 	$("li[name='"+name+"']").attr('class','');
 	$(obj).attr('class','selected');
 	$("#property_"+suffix).val(property_id);
+	console.log("损伤详情id:"+property_id);
 	//自动下一步
 	auto_go_next(obj);
 }
@@ -37,6 +38,7 @@ function	item_click(obj,suffix){
     }else {
         $(obj).attr('class','selected');
         $("#desc_id_"+suffix).val(suffix);
+        console.log("损伤详情id:"+suffix);
 	}
 /*	var default_id	=	arguments[3] ? arguments[3] : desc_id;
 	if(default_id	!=	desc_id){		//可多选时

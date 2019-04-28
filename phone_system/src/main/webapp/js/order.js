@@ -1,4 +1,4 @@
-function checkfrom(){
+function   checkfrom(){
 	//联系方式
 	if($("input[name='member_addr']:checked").length	==	0){
 		alert("请选择联系方式");

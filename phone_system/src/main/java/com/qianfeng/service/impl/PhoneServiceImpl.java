@@ -1,6 +1,7 @@
 package com.qianfeng.service.impl;
 
 import com.qianfeng.dao.PhoneDAO;
+import com.qianfeng.mapper.PhoneMapper;
 import com.qianfeng.po.TbBrank;
 import com.qianfeng.po.TbPhone;
 import com.qianfeng.service.PhoneService;
@@ -15,13 +16,16 @@ public class PhoneServiceImpl implements PhoneService {
     @Autowired
     private PhoneDAO phoneDAO;
 
+    @Autowired
+    private PhoneMapper phoneMapper;
+
     /**
      * 查询所有品牌
      * @return
      */
     @Override
     public List<TbBrank> queryAllBrank() {
-        return phoneDAO.queryAllBrank();
+        return phoneMapper.queryAllBrank();
     }
 
     /**
@@ -29,11 +33,11 @@ public class PhoneServiceImpl implements PhoneService {
      */
     @Override
     public List<TbPhone> queryAllPhoneInfo(Integer page) {
-        return phoneDAO.queryAllPhoneInfo(page);
+        return phoneMapper.queryAllPhoneInfo(page);
     }
 
     @Override
     public List<TbPhone> queryPhoneInfoByBrank(Integer brankId) {
-        return phoneDAO.queryPhoneInfoByBrank(brankId);
+        return phoneMapper.queryPhoneInfoByBrank(brankId);
     }
 }

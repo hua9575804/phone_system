@@ -54,4 +54,14 @@ public class TbPhone {
     this.brankId = brankId;
   }
 
+  @Override
+  public String toString() {
+    return "TbPhone{" +
+            "phoneId=" + phoneId +
+            ", phoneInfo='" + phoneInfo + '\'' +
+            ", phoneImage='" + phoneImage + '\'' +
+            ", phonePrice=" + phonePrice +
+            ", brankId=" + brankId +
+            '}';
+  }
 }
